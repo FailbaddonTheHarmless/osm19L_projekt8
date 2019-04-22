@@ -14,7 +14,7 @@ public class Segmentator {
     private BufferedImage placeHolder;
     private int width;
     private int height;
-    private int maxIterations = 500;
+    private int maxIterations = 100;
     private ColorHelper colorHelper;
 
     public Segmentator(){
@@ -84,19 +84,20 @@ public class Segmentator {
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
                 temp =  new Color(image.getRGB(col,row));
-                if ( temp.getRed() == 0){
-                    placeHolder.setRGB(row,col,Color.BLACK.getRGB());
-                }
-                else{
+                //if ( temp.getRed() < 10){
+                  //  placeHolder.setRGB(row,col,Color.BLACK.getRGB());
+                //}
+                //else {
                     centroid = centroidArray[row][col];
-                    placeHolder.setRGB(col,row, colorArray[centroid].getRGB());
-                }
-                System.out.println(centroid);
-
+                    placeHolder.setRGB(col, row, colorArray[centroid].getRGB());
+                //}
             }
         }
 
         return placeHolder;
+    }
+    private double getGray(Color color){
+        return (color.getRed()+color.getBlue()+color.getGreen())/3;
     }
 
     public BufferedImage segment(){
@@ -104,7 +105,7 @@ public class Segmentator {
         int minDistanceCentroid = 0;
         double distance;
         int[][] centroidArray = new int[height][width];
-        Color grey;
+        Color gray;
 
         initiateCentroids();
         for (int i = 0; i < maxIterations; i++) {
@@ -112,8 +113,8 @@ public class Segmentator {
                 for (int col = 0; col < width; col++) {
                     minDistance = 255;
                     for (int c = 0; c < kNumber; c++) {
-                        grey = new Color(intensityArray[row][col]);
-                        distance = calculateDistance(centroids[c], grey.getRed());
+                        gray = new Color(intensityArray[row][col]);
+                        distance = calculateDistance(centroids[c], getGray(gray));
                         if (distance < minDistance) {
                             minDistance = distance;
                             minDistanceCentroid = c;

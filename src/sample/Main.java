@@ -15,11 +15,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader fxmll = new FXMLLoader(getClass().getResource("sample/sample.fxml"));
+        FXMLLoader fxmll = new FXMLLoader(getClass().getResource("/sample/sample.fxml"));
         Parent root = fxmll.load();
         Controller controller = fxmll.getController();
 
-        TextInputDialog dialog = new TextInputDialog("C:\\Users\\Dejwu\\Downloads\\gs_neo4j_workshop-master\\OSM_Projekt#8\\src\\sample\\sample.jpg");
+        TextInputDialog dialog = new TextInputDialog("C:\\Users\\User\\Desktop\\sample.jpg");
         dialog.setTitle("Segmentation Parameters");
         dialog.setHeaderText("Please enter DICOM FILEPATH");
         Optional<String> result = dialog.showAndWait();
